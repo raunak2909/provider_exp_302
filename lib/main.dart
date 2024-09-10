@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_exp_302/counter_provider.dart';
+import 'package:provider_exp_302/list_map_provider.dart';
+import 'package:provider_exp_302/list_page.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(
-    create: (context) => CounterProvider(),
+    create: (context) => ListMapProvider(),
     child: MyApp(),
   ));
 }
@@ -36,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: ListPage(),
     );
   }
 }
@@ -44,6 +46,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    print("This build function is called!!");
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -82,10 +85,13 @@ class MyHomePage extends StatelessWidget {
             const Text(
               'You have pushed the button this many times:',
             ),
-            Text(
-              '${Provider.of<CounterProvider>(context).getCounterValue()}',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            Consumer<CounterProvider>(builder: (_, provider, __){
+              print("Consumer builder is called!!");
+              return Text(
+                '${provider.getCounterValue()}',
+                style: Theme.of(context).textTheme.headlineMedium,
+              );
+            }),
           ],
         ),
       ),
